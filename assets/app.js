@@ -6,8 +6,6 @@ function displayMovieInfo() {
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movieGIF + "&apikey=Kjfr6NFOahJ1dHWskpCZ5XzxIKmXsDtC&limit=10&rating="
 
 
-    // $("button").on("click", function(){
-    //     $(this).attr("data-name");
     $.ajax({
         url: queryURL,
         method: "GET"
@@ -27,7 +25,10 @@ function displayMovieInfo() {
             var rating = results[i].rating;
 
             // Creating a paragraph tag with the result item's rating
-            var ratingDisplay = $("<p>").text("Rating: " + rating);
+            var ratingDisplay = $("<div>").text("Rating: " + rating);
+
+            // Create a div to contain the img
+            var filmDiv = $("<div>");
 
             // Creating an image tag
             var filmImage = $("<img>");
@@ -35,21 +36,23 @@ function displayMovieInfo() {
             // Giving the image tag an src attribute of a proprty pulled off the
             // result item
             filmImage.attr("src", results[i].images.fixed_height_still.url);
-            ratingDisplay.addClass("text-light d-sm-inline-flex");
+            ratingDisplay.addClass("text-warning");
 
             // Appending the paragraph and personImage we created to the "gifDiv" div we created
             gifImage.append(ratingDisplay);
-            gifImage.append(filmImage);
-            gifImage.addClass("d-sm-inline-flex");
+            filmDiv.append(filmImage);
+            gifImage.append(filmDiv);
+            gifImage.addClass("d-inline-block text-center mb-2 mr-3");
+            filmImage.attr("data-state", "still");
+            filmImage.addClass("gif")
+            filmImage.attr("data-still", results[i].images.fixed_height_still.url);
+            filmImage.attr("data-animate", results[i].images.fixed_height.url);
 
             // Prepending the gifDiv to the "#gifs-appear-here" div in the HTML
             $("#film-gif-display").prepend(gifImage);
           }
         }
-
-
     });
-// });
 }
 
 //When a button is clicked...
@@ -71,24 +74,26 @@ function createButtons() {
     }
 }
 
-$("button").on("click", function() {
-    // The attr jQuery method allows us to get or set the value of any attribute on our HTML element
-    var state = $(this).attr("data-state");
-    // If the clicked image's state is still, update its src attribute to what its data-animate value is.
-    // Then, set the image's data-state to animate
-    // Else set src to the data-still value
-    if (state === "still") {
-      $(this).attr("src", $(this).attr("data-animate"));
-      $(this).attr("data-state", "animate");
-    } else {
-      $(this).attr("src", $(this).attr("data-still"));
-      $(this).attr("data-state", "still");
-    }
-  });
+
 
 $(document).on("click", ".movie", displayMovieInfo);
 
 createButtons();
+
+$(document).on("click", ".gif", function() {
+    
+  var state = $(this).attr("data-state");
+
+  console.log(state)
+
+  if (state === "still") {
+    $(this).attr("src", $(this).attr("data-animate"));
+    $(this).attr("data-state", "animate");
+  } else {
+    $(this).attr("src", $(this).attr("data-still"));
+    $(this).attr("data-state", "still");
+  }
+});
 
 
 
