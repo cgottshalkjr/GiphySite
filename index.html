@@ -12,23 +12,34 @@
     <link rel="stylesheet" type="text/css" href="assets/style.css">
 </head>
 
-<body>
+<body class="bg-dark">
 
 
-    <div class="container bg-dark" id="buttons-view">
 
 
+    <div class="row">
+        <div class="offset-4 mb-3">
             <form class="form-inline">
-                    <div class="form-group m-4">
-                      <label for="inputPassword2" class="sr-only">Password</label>
-                      <input type="password" class="form-control" id="inputPassword2" placeholder="GIF">
-                    </div>
-                    <button type="submit" class="btn btn-dark m-4">FIND YOUR OWN DANG GIF</button>
-                  </form>
+                <div class="form-group m-4">
+                    <label for="movie-input" class="sr-only"></label>
+                    <input type="text" class="form-control" id="movie-input" placeholder="GIF">
+                </div>
 
+                <input id="add-movie-gif" class="btn btn-light sm-m-4" type="submit" value="FIND YOUR OWN DANG GIF!!">
+            </form>
+        </div>
     </div>
 
-    
+    <div class="container" id="buttons-view"> </div>
+
+
+
+
+
+
+    <div id="film-gif-display"></div>
+
+
 
 
     <script type="text/javascript" src="assets/app.js">
